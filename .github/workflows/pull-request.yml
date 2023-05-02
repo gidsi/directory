@@ -1,8 +1,5 @@
 ---
 on:
-    push:
-        paths:
-          - directory.json
     pull_request:
         branches:
           - master
@@ -20,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - run: sudo apt-get install -y python3-demjson
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
         - run: jsonlint --strict ./directory.json
     check-url:
         name: Check URL
@@ -43,6 +40,11 @@ jobs:
                   ${{ github.sha }} \
                 | grep ^+ \
                 | grep -Eo 'https?://[^"]+')" >> $GITHUB_ENV
+
+              if [ -z "$urls" ]; then
+                  echo "No URLs were changed"
+                  exit 1
+              fi
           - name: Check URLs
             run: |
               for url in $urls; do
