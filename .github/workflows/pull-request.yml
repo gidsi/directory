@@ -50,9 +50,9 @@ jobs:
                 isValid=$(curl \
                   'https://validator.spaceapi.io/v2/validateURL' \
                   -X POST \
-                  -H 'Content-Type: application/json' \ 
+                  -H 'Content-Type: application/json' \
                   --data-raw "{\"url\":\"$url\"}" \
-                | jq -e '.valid' || echo false)
+                | jq -e '.valid')
                 
                 if [ "$isValid" = "false" ]; then
                   echo "URL $url is invalid"
