@@ -42,7 +42,7 @@ jobs:
                   ${{ github.event.pull_request.base.sha }} \
                   ${{ github.sha }} \
                 | grep ^+ \
-                | grep -Eo 'https?://[^"]+')"
+                | grep -Eo 'https?://[^"]+')
 
               if [ -z "$urls" ]; then
                   echo "No URLs were changed"
