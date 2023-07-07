@@ -71,7 +71,7 @@ jobs:
             # write comment to pull request
           - name: Write comment
             uses: actions/github-script@v6
-            if: failure() && context.issue.number
+            if: failure() && github.event.number
             with:
               script: |
                   const { failed_url } = process.env
