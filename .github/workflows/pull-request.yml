@@ -40,7 +40,7 @@ jobs:
                   diff \
                   --diff-filter=ACMRT \
                   --minimal \
-                  ${{ github.event.pull_request.base.sha }} \
+                  ${{ github.sha }}^ # ${{ github.event.pull_request.base.sha }} \
                   ${{ github.sha }} \
                 | grep ^+ \
                 | grep -Eo 'https?://[^"]+')
