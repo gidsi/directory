@@ -2,6 +2,12 @@
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
+      - main
+    paths:
+      - directory.json
+
   pull_request:
     branches:
       - master
@@ -25,29 +31,27 @@ jobs:
             uses: actions/checkout@v3
             with:
               fetch-depth: 2
-#          - name: Get changed urls from directory.json
-#            id: changes
-#            run: |
-#              echo "urls=$(\
-#                git \
-#                  diff \
-#                  --diff-filter=ACMRT \
-#                  --minimal \
-#                  --rotate-to directory.json \
-#                  ${{ github.event.pull_request.base.sha }} \
-#                  ${{ github.sha }} \
-#                | grep ^+ \
-#                | grep -Eo 'https?://[^"]+')" >> $GITHUB_ENV
-#
-#              if [ -z "$urls" ]; then
-#                  echo "No URLs were changed"
-#                  exit 1
-#              fi
+          - name: Get changed urls from directory.json
+            id: changes
+            run: |
+              urls=$(\
+                git \
+                  diff \
+                  --diff-filter=ACMRT \
+                  --minimal \
+                  ${{ github.event.pull_request.base.sha }} \
+                  ${{ github.sha }} \
+                | grep ^+ \
+                | grep -Eo 'https?://[^"]+')"
+
+              if [ -z "$urls" ]; then
+                  echo "No URLs were changed"
+                  exit 1
+              fi
+              
+              echo "urls=$urls" >> $GITHUB_ENV
           - name: Check URLs
             run: |
-              echo "failed_url=https://www.devtal.de/api/" >> $GITHUB_ENV
-              exit 1
-              
               for url in $urls; do
                 echo "Checking $url"
                 isValid=$(curl \
