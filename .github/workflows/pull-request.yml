@@ -55,11 +55,13 @@ jobs:
                   --data-raw "{\"url\":\"$url\"}" \
                 | jq -e '.valid')
                 
-                if [ "$isValid" = "false" ]; then
-                  echo "URL $url is invalid"
-                  echo "failed_url=$url" >> $GITHUB_ENV
-                  exit 1
+                if [ "$isValid" = "true" ]; then
+                  echo "URL $url is valid"
+                  exit 0
                 fi
+
+                echo "URL $url is invalid"
+                echo "failed_url=$url" >> $GITHUB_ENV
               done
             # write comment to pull request
           - name: Write comment
