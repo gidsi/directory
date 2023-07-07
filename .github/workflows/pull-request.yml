@@ -34,6 +34,7 @@ jobs:
           - name: Get changed urls from directory.json
             id: changes
             run: |
+              set -xe
               urls=$(\
                 git \
                   diff \
