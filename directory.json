@@ -1,6 +1,6 @@
 {
   "/dev/tal": "https://www.devtal.de/api/",
-  "/usr/space": "https://www.usrspace.at/spaceapi.json",
+  "/usr/space": "https://www.usrspace.at/space",
   "57North Hacklab": "https://hub.57north.org.uk/spaceapi",
   "ACKspace": "https://ackspace.nl/spaceAPI/",
   "AFRA": "https://spaceapi.afra-berlin.de/v1/status.json",
