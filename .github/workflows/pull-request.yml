@@ -48,12 +48,14 @@ jobs:
             run: |
               for url in $urls; do
                 echo "Checking $url"
-                isValid=$(curl \
+                response=$(curl \
                   'https://validator.spaceapi.io/v2/validateURL' \
                   -X POST \
                   -H 'Content-Type: application/json' \
-                  --data-raw "{\"url\":\"$url\"}" \
-                | jq -e '.valid')
+                  --data-raw "{\"url\":\"$url\"}")
+                isValid=$(echo $response | jq -e '.valid')
+              
+                echo Validator response was: $response
                 
                 if [ "$isValid" = "true" ]; then
                   echo "URL $url is valid"
