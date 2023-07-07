@@ -1,15 +1,11 @@
 ---
 on:
-    pull_request:
-        branches:
-          - master
-          - main
-        paths:
-          - directory.json
-
-permissions:
-    pull-requests: write
-    contents: read
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - directory.json
 
 jobs:
     jsonlint:
@@ -64,10 +60,9 @@ jobs:
               done
             # write comment to pull request
           - name: Write comment
-            uses: actions/github-script@v3
+            uses: actions/github-script@v6
             if: failure()
             with:
-              github-token: ${{ secrets.GITHUB_TOKEN }}
               script: |
                   github.issues.createComment({
                     issue_number: context.issue.number,
