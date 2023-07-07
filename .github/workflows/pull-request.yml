@@ -1,5 +1,11 @@
 ---
 on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - directory.json
   pull_request:
     branches:
       - master
